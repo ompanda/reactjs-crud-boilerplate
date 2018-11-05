@@ -12,7 +12,9 @@ import 'toastr/build/toastr.min.css';
 import 'font-awesome/css/font-awesome.css';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 
-
+// setup fake backend
+import { configureFakeBackend } from './helpers/';
+configureFakeBackend();
 
 const store = configureStore();
 
