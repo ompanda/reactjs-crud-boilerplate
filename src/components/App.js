@@ -8,11 +8,16 @@ import AddOrEditCourseContainer from './course/AddOrEditCourseContainer'; // esl
 import About from './About';
 import createBrowserHistory from 'history/createBrowserHistory';
 import HeaderNavContainer from './landing/HeaderNavContainer'; // eslint-disable-line import/no-named-as-default
+import { history } from '../helpers';
+import PrivateRoute from './common/PrivateRoute'
 
 
 
-const history = createBrowserHistory();
-
+// const history = createBrowserHistory();
+history.listen((location, action) => {
+    // clear alert on location change
+    //dispatch(alertActions.clear());
+});
 
 const App = () => {
     return (
@@ -22,12 +27,12 @@ const App = () => {
 
                     <HeaderNavContainer />
 
-                    <Switch>
+                    <Switch>                       
                         <Route exact path="/" component={Home} />
                         <Route exact path="/login" component={LoginPage} />
-                        <Route path="/courses" component={CourseListContainer} />
-                        <Route exact path="/course" component={AddOrEditCourseContainer} />
-                        <Route path="/course/:id" component={AddOrEditCourseContainer} />
+                        <PrivateRoute exact path="/courses" component={CourseListContainer} />
+                        <PrivateRoute exact path="/course" component={AddOrEditCourseContainer} />
+                        <PrivateRoute path="/course/:id" component={AddOrEditCourseContainer} />
                         <Route path="/about" component={About} />
                         <Route component={PageNotFound} />
                     </Switch>

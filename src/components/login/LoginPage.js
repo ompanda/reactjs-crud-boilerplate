@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { history } from '../../helpers';
 import { userActions } from '../../action/UserActions';
 
 class LoginPage extends React.Component {
@@ -9,7 +9,7 @@ class LoginPage extends React.Component {
         super(props);
 
         // reset login status
-        this.props.dispatch(userActions.logout());
+        //this.props.dispatch(userActions.logout());
 
         this.state = {
             username: '',
@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { loggingIn } = this.props;
+        const { loggingIn,loggedIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
@@ -65,15 +65,20 @@ class LoginPage extends React.Component {
                         }
                         <Link to="/register" className="btn btn-link">Register</Link>
                     </div>
+                                    
                 </form>
+
+                { loggingIn && <div>Please wait...</div> }
+                { loggedIn && <div>Success.</div> }                
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    loggingIn: state.authentication
-});
+    loggingIn: state.authenticationReducer.loggingIn,
+    loggedIn: state.authenticationReducer.loggedIn
+    });
 
 
 export default connect(mapStateToProps)(LoginPage);
